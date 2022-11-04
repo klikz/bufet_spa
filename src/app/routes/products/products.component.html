@@ -1,0 +1,97 @@
+<p-toast></p-toast>
+<div class="card">
+    <p-table [value]="products" dataKey="id" editMode="row" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Name</th>
+                <th>Sotuv Narx</th>
+                <th>Kirim Narx</th>
+                <th>Mavjud</th>
+                <th style="width:8rem"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product let-editing="editing" let-ri="rowIndex">
+            <tr [pEditableRow]="product">
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="product.name">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{product.name}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-inputNumber type="text" [(ngModel)]="product.price"></p-inputNumber>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{product.price}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-inputNumber type="text" [(ngModel)]="product.prixod"></p-inputNumber>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{product.prixod}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-inputNumber type="text" [(ngModel)]="product.available"></p-inputNumber>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{product.available}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td style="text-align:center">
+                    <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
+                        class="p-button-rounded p-button-text"></button>
+                    <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash"
+                        (click)="onRemoveItem(product)" class="p-button-rounded p-button-text"></button>
+                    <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
+                        (click)="onRowEditSave(product)"
+                        class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                    <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
+                        (click)="onRowEditCancel(product, ri)"
+                        class="p-button-rounded p-button-text p-button-danger"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<button pButton type="button" label="Yangi kiritish" (click)="openNew()"></button>
+
+<p-dialog [(visible)]="addProduct" [style]="{width: '450px'}" header="Component Details" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="field">
+            <label for="name">Name</label>
+            <input type="text" pInputText id="name" [(ngModel)]="newProduct.name" required autofocus />
+            <small class="p-error" *ngIf="submitted && !newProduct.name">Name is required.</small>
+        </div>
+        <div class="field">
+            <label for="prixod">Kirim Narx</label>
+            <p-inputNumber type="text" pInputText id="prixod" [(ngModel)]="newProduct.prixod"></p-inputNumber>
+            <small class="p-error" *ngIf="submitted && !newProduct.prixod">Kirim narx kerak.</small>
+        </div>
+        <div class="field">
+            <label for="price">Sotuv Narx</label>
+            <p-inputNumber type="text" pInputText id="price" [(ngModel)]="newProduct.price"></p-inputNumber>
+            <small class="p-error" *ngIf="submitted && !newProduct.price">Sotuv narx kerak.</small>
+        </div>
+    </ng-template>
+    
+    <ng-template pTemplate="footer">
+        <button pButton label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+    </ng-template>
+</p-dialog>

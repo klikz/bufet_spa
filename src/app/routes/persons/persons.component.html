@@ -1,0 +1,81 @@
+<p-toast></p-toast>
+<div class="card">
+    <p-table [value]="persons" dataKey="id" editMode="row" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Name</th>
+                <th>ID</th>
+                <th>Summa</th>
+                <th style="width:8rem"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-person let-editing="editing" let-ri="rowIndex">
+            <tr [pEditableRow]="person">
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="person.name">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{person.name}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p> {{person.id}}</p>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{person.id}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-inputNumber type="text" [(ngModel)]="person.summa"></p-inputNumber>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{person.summa}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td style="text-align:center">
+                    <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
+                        class="p-button-rounded p-button-text"></button>
+                    <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash"
+                        (click)="onRemoveItem(person)" class="p-button-rounded p-button-text"></button>
+                    <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
+                        (click)="onRowEditSave(person)"
+                        class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                    <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
+                        
+                        class="p-button-rounded p-button-text p-button-danger"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<button pButton type="button" label="Yangi kiritish" (click)="openNew()"></button>
+
+<p-dialog [(visible)]="addPerson" [style]="{width: '450px'}" header="Component Details" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="field">
+            <label for="name">Name</label>
+            <input type="text" pInputText id="name" [(ngModel)]="newPerson.name" required autofocus />
+            <small class="p-error" *ngIf="submitted && !newPerson.name">Name is required.</small>
+        </div>
+        <div class="field">
+            <label for="id_nomer">id_nomer</label>
+            <input type="number" pInputText id="id_nomer" [(ngModel)]="newPerson.id_nomer" required />
+            <small class="p-error" *ngIf="submitted && !newPerson.name">ID is required.</small>
+        </div>
+    </ng-template>
+    
+    <ng-template pTemplate="footer">
+        <button pButton label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+    </ng-template>
+</p-dialog>

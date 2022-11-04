@@ -1,0 +1,26 @@
+<p-toast></p-toast>
+<div class="card">
+    <div class="grid">
+        <div class="col" style="padding-top: 10px;">
+                <p-dropdown [options]="products" [(ngModel)]="selectedProduct" optionLabel="name" [filter]="true" filterBy="name"
+                [showClear]="true" placeholder="Maxsulot tanlang">
+                <ng-template pTemplate="selectedItem">
+                    <div class="country-item country-item-value" *ngIf="selectedProduct">
+                        <div>{{selectedProduct.name}}</div>
+                    </div>
+                </ng-template>
+                <ng-template let-product pTemplate="item">
+                    <div class="country-item">
+                        <div>{{product.name}}, {{product.price}}, {{product.available}}</div>
+                    </div>
+                </ng-template>
+                </p-dropdown>
+            <div class="col" style="padding-top: 10px;">
+                <p-inputNumber type="number" [(ngModel)]="soni" placeholder="soni"></p-inputNumber>
+            </div>
+        </div>
+    </div>
+    <div style="padding-top: 10px;">
+        <button pButton type="button" label="Kiritish" (click)="addincome()"  ></button>
+    </div>
+</div>
